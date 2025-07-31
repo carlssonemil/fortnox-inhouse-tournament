@@ -35,7 +35,7 @@ const setRouteHtml = () => {
     if (!root)
         return
 
-    const route: Routes | undefined = routes.find(route => route.path ==  window.location.pathname)
+    const route: Routes | undefined = routes.find(route => route.path == window.location.pathname || '/fortnox-inhouse-tournament' + route.path == window.location.pathname)
 
     if (!route)
         return
@@ -81,12 +81,12 @@ const setEventListeners = () => {
     window.addEventListener('popstate', setRouteHtml)
 
     window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll<HTMLAnchorElement>('nav a').forEach(link => {
+            link.addEventListener('click', router)
+        })
+
         setRouteHtml()
         setNavLinkColor()
-    })
-
-    document.querySelectorAll<HTMLAnchorElement>('nav ul li a').forEach(link => {
-        link.addEventListener('click', router)
     })
 }
 
