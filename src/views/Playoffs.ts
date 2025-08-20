@@ -1,6 +1,12 @@
 export default `
   <h1 class="text-2xl/7 font-bold sm:truncate sm:text-3xl sm:tracking-tight pb-8">Slutspel</h1>
   
+  <h2 class="font-bold sm:truncate sm:tracking-tight pb-3">Uppdateras så fort gruppspelet är klart.</h2>
+`
+
+/*export default `
+  <h1 class="text-2xl/7 font-bold sm:truncate sm:text-3xl sm:tracking-tight pb-8">Slutspel</h1>
+  
   <div class="grid grid-flow-col grid-cols-3 items-center">
     <div class="grid grid-flow-row grid-rows-3">
       <div class="mb-4 rounded-lg bg-stone-200 px-6 py-4 space-y-2 text-xs md:text-base">
@@ -79,4 +85,4 @@ export default `
       </div>
     </div>
   </div>
-`
+`*/

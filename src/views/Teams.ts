@@ -1,6 +1,12 @@
 export default `
   <h1 class="text-2xl/7 font-bold sm:truncate sm:text-3xl sm:tracking-tight pb-8">Lag</h1>
   
+  <h2 class="font-bold sm:truncate sm:tracking-tight pb-3">Uppdateras så fort lagen är lottade.</h2>
+`
+
+/*export default `
+  <h1 class="text-2xl/7 font-bold sm:truncate sm:text-3xl sm:tracking-tight pb-8">Lag</h1>
+  
   <div class="grid grid-flow-col grid-cols-4 mb-4 items-start">
     <div class="grid grid-flow-row mr-2">
       <table class="w-full border-collapse border">
@@ -124,4 +130,4 @@ export default `
       </table>
     </div>
   </div>
-`
+`*/

@@ -1,53 +1,15 @@
-import type Participant from "../models/Participant.ts";
+import type Team from '../models/Team';
+import type Participant from '../models/Participant';
 
-let participants: Participant[] = [
-    { firstname: 'Patrik', surname: 'Björn', nickname: 'BJOERN' },
-    { firstname: 'Lena', surname: 'Kowalski', nickname: 'LENSKY' },
-    { firstname: 'Hiroshi', surname: 'Takahashi', nickname: 'HIRO' },
-    { firstname: 'Amira', surname: 'Nasri', nickname: 'MIRA' },
-    { firstname: 'Carlos', surname: 'Domínguez', nickname: 'CARLITO' },
-    { firstname: 'Freya', surname: 'Andersen', nickname: 'FREY' },
-    { firstname: 'Zane', surname: 'Keller', nickname: 'ZAK' },
-    { firstname: 'Nina', surname: 'Volkova', nickname: 'VOLKA' },
-    { firstname: 'Tariq', surname: 'Hassan', nickname: 'TQ' },
-    { firstname: 'Sophie', surname: 'Dubois', nickname: 'SOPH' },
-    { firstname: 'Mateo', surname: 'Rossi', nickname: 'TEO' },
-    { firstname: 'Ines', surname: 'Müller', nickname: 'NES' },
-    { firstname: 'David', surname: 'Nguyen', nickname: 'DAVE' },
-    { firstname: 'Luca', surname: 'Petrovic', nickname: 'LUCKY' },
-    { firstname: 'Ayla', surname: 'Demir', nickname: 'AY' },
-    { firstname: 'Jonas', surname: 'Lindholm', nickname: 'JONNY' },
-    { firstname: 'Fatima', surname: 'Al-Mansoori', nickname: 'FATZ' },
-    { firstname: 'Noah', surname: 'Zimmer', nickname: 'ZIM' },
-    { firstname: 'Chiara', surname: 'Bianchi', nickname: 'CHI' },
-    { firstname: 'Elias', surname: 'Gruber', nickname: 'ELI' },
-    { firstname: 'Rania', surname: 'Fahmy', nickname: 'RAN' },
-    { firstname: 'Marcus', surname: 'Stewart', nickname: 'MARCY' },
-    { firstname: 'Tanya', surname: 'Ilyin', nickname: 'TAN' },
-    { firstname: 'Leo', surname: 'Carvalho', nickname: 'LION' },
-    { firstname: 'Mila', surname: 'Horvat', nickname: 'MIMI' },
-    { firstname: 'Jasper', surname: 'Schultz', nickname: 'JAZZ' },
-    { firstname: 'Lena', surname: 'Kowalski', nickname: 'LENSKY' },
-    { firstname: 'Hiroshi', surname: 'Takahashi', nickname: 'HIRO' },
-    { firstname: 'Amira', surname: 'Nasri', nickname: 'MIRA' },
-    { firstname: 'Carlos', surname: 'Domínguez', nickname: 'CARLITO' },
-    { firstname: 'Freya', surname: 'Andersen', nickname: 'FREY' },
-    { firstname: 'Zane', surname: 'Keller', nickname: 'ZAK' },
-    { firstname: 'Nina', surname: 'Volkova', nickname: 'VOLKA' },
-    { firstname: 'Tariq', surname: 'Hassan', nickname: 'TQ' },
-    { firstname: 'Sophie', surname: 'Dubois', nickname: 'SOPH' },
-    { firstname: 'Mateo', surname: 'Rossi', nickname: 'TEO' },
-    { firstname: 'Ines', surname: 'Müller', nickname: 'NES' },
-    { firstname: 'David', surname: 'Nguyen', nickname: 'DAVE' },
-    { firstname: 'Luca', surname: 'Petrovic', nickname: 'LUCKY' },
-    { firstname: 'Ayla', surname: 'Demir', nickname: 'AY' },
-];
+import participants from '../collections/participants';
+import teams from '../collections/teams';
+import { teamName } from '../helpers/teamName';
+import { teamStats } from '../helpers/teamStats';
+import matches from '../collections/matches';
+import type TeamStats from '../models/TeamStats';
 
 const participantList: string[] = participants.map((participant: Participant, index: number) => {
-    let kills = Math.floor(Math.random() * (400 - 100) + 100),
-        deaths = Math.floor(Math.random() * (100 - 400) + 400);
-
-    let kd = kills / deaths;
+    let kd = participant.kills / participant.deaths || 0;
 
     let bg = '';
 
@@ -59,12 +21,23 @@ const participantList: string[] = participants.map((participant: Participant, in
         bg = 'bg-amber-100';
     }
 
+    let team: Team | undefined = teams.find(team => team.team === participant.team);
+
+    if (!team) {
+        return '';
+    }
+
+    let stats: TeamStats = teamStats(team.team, matches);
+
     return `
         <tr>
             <td class="border p-4 text-left ${bg}">${participant.firstname} <strong>${participant.nickname}</strong> ${participant.surname}</td>
-            <td class="border p-4 text-right ${bg}">6</td>
-            <td class="border p-4 text-right ${bg}">${kills}</td>
-            <td class="border p-4 text-right ${bg}">${deaths}</td>
+            <td class="border p-4 text-left ${bg}">${teamName(team?.team)}</td>
+            <td class="border p-4 text-right ${bg}">${stats.played}</td>
+            <td class="border p-4 text-right ${bg}">${stats.won}</td>
+            <td class="border p-4 text-right ${bg}">${stats.lost}</td>
+            <td class="border p-4 text-right ${bg}">${participant.kills}</td>
+            <td class="border p-4 text-right ${bg}">${participant.deaths}</td>
             <td class="border p-4 text-right ${bg}">${kd.toFixed(2)}</td>
         </tr>
     `
@@ -76,8 +49,11 @@ export default `
   <table class="w-full border-collapse border">
     <thead>
         <tr>
-            <th></th>
-            <th class="p-4 text-right">M</th>
+            <th class="p-4 text-left">Spelare</th>
+            <th class="p-4 text-left">Lag</th>
+            <th class="p-4 text-right">Matcher</th>
+            <th class="p-4 text-right">Vinster</th>
+            <th class="p-4 text-right">Förluster</th>
             <th class="p-4 text-right">K</th>
             <th class="p-4 text-right">D</th>
             <th class="p-4 text-right">K/D</th>

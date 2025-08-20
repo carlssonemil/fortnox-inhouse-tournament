@@ -1,14 +1,20 @@
 import type Routes from './models/Routes'
 
+import HomeView from './views/Home'
 import GroupsView from './views/Groups'
 import PlayoffsView from './views/Playoffs'
 import ParticipantsView from './views/Participants'
 import TeamsView from './views/Teams'
 import StatsView from './views/Stats'
+import RulesView from './views/Rules'
 
 const routes: Routes[] = [
     {
         path: '/',
+        data: HomeView
+    },
+    {
+        path: '/groups',
         data: GroupsView
     },
     {
@@ -26,6 +32,10 @@ const routes: Routes[] = [
     {
         path: '/stats',
         data: StatsView
+    },
+    {
+        path: '/rules',
+        data: RulesView
     },
 ]
 
