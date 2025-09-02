@@ -17,15 +17,13 @@ export function teamStats(team: number, matches: Match[]): TeamStats {
         conceded: 0,
     };
 
-    // Filter games by group
-    const groupGames = matches.filter(match => match.group === team);
-    if (groupGames.length === 0) return stats[team];
-
     matches.forEach(({ team1, team2, games }) => {
-        stats[team].played++;
+        let winner = 0;
 
         games.forEach(({ score1, score2 }) => {
-            let winner = 0;
+            if (score1 === null || score2 === null) {
+                return;
+            }
 
             stats[team].mapPlayed++;
 
@@ -52,17 +50,20 @@ export function teamStats(team: number, matches: Match[]): TeamStats {
                     winner--;
                 }
             }
-
-            if (winner > 0) {
-                stats[team].won++;
-                stats[team].points += 3;
-                stats[team].lost++;
-            } else {
-                stats[team].won++;
-                stats[team].points += 3;
-                stats[team].lost++;
-            }
         });
+
+        if (winner === 0) {
+            return;
+        }
+
+        if (winner > 0) {
+            stats[team].won++;
+            stats[team].points += 3;
+        } else {
+            stats[team].lost++;
+        }
+
+        stats[team].played++;
     });
 
     return stats[team];

@@ -28,19 +28,19 @@ export function getGroupStandings(groupNumber: number, matches: Match[]) {
             }
         });
 
-        // Update stats
-        teams[team1].played++
-        teams[team2].played++;
-
         let winner = 0;
 
         games.forEach(({ score1, score2 }) => {
-           teams[team1].mapPlayed++;
-           teams[team2].mapPlayed++;
-           teams[team1].scored += score1;
-           teams[team1].conceded += score2;
-           teams[team2].scored += score2;
-           teams[team2].conceded += score1;
+            if (score1 === null || score2 === null) {
+                return;
+            }
+
+            teams[team1].mapPlayed++;
+            teams[team2].mapPlayed++;
+            teams[team1].scored += score1;
+            teams[team1].conceded += score2;
+            teams[team2].scored += score2;
+            teams[team2].conceded += score1;
 
             if (score1 > score2) {
                 teams[team1].mapWon++;
@@ -54,6 +54,13 @@ export function getGroupStandings(groupNumber: number, matches: Match[]) {
                 winner--;
             }
         });
+
+        if (winner === 0) {
+            return;
+        }
+
+        teams[team1].played++
+        teams[team2].played++;
 
         if (winner > 0) {
             teams[team1].won++;
@@ -82,13 +89,14 @@ export function getGroupStandings(groupNumber: number, matches: Match[]) {
     return sortedMap.map((team, index) => {
         const { id, won, lost, points, scored, conceded } = team;
         const rank = index + 1;
+        const rd = scored - conceded;
 
         return `
                 <tr>
                     <td class="border p-4 text-left font-bold">${rank}. ${teamName(id)}</td>
                     <td class="border p-4 text-left">${won}</td>
                     <td class="border p-4 text-left">${lost}</td>
-                    <td class="border p-4 text-left">${scored - conceded}</td>
+                    <td class="border p-4 text-left">${rd > 0 ? '+' + rd : rd}</td>
                     <td class="border p-4 text-left">${points}</td>
                 </tr>
             `

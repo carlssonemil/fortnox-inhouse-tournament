@@ -1,5 +1,5 @@
 export default `
-    <div class="md:flex flex-col md:flex-row md:min-h-screen sticky top-0 h-screen">
+    <div class="md:flex flex-col md:flex-row md:min-h-screen sticky top-0 md:h-screen">
       <div @click.away="open = false" class="flex flex-col w-full md:w-64 text-white bg-emerald-900 flex-shrink-0" x-data="{ open: false }">
         <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
           <a href="./" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">Fortnox Inhouse Tournament #4</a>

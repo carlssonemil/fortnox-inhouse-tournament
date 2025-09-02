@@ -8,7 +8,19 @@ import { teamStats } from '../helpers/teamStats';
 import matches from '../collections/matches';
 import type TeamStats from '../models/TeamStats';
 
-const participantList: string[] = participants.map((participant: Participant, index: number) => {
+const participantList: string[] = participants
+    .slice()
+    .sort((a, b) => {
+        if (b.kills !== a.kills) {
+            return b.kills - a.kills;
+        }
+
+        const aKD = a.kills / (a.deaths || 1);
+        const bKD = b.kills / (b.deaths || 1);
+
+        return bKD - aKD;
+    })
+    .map((participant: Participant, index: number) => {
     let kd = participant.kills / participant.deaths || 0;
 
     let bg = '';
@@ -30,7 +42,7 @@ const participantList: string[] = participants.map((participant: Participant, in
     let stats: TeamStats = teamStats(team.team, matches);
 
     return `
-        <tr>
+        <tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-200">
             <td class="border p-4 text-left ${bg}">${participant.firstname} <strong>${participant.nickname}</strong> ${participant.surname}</td>
             <td class="border p-4 text-left ${bg}">${teamName(team?.team)}</td>
             <td class="border p-4 text-right ${bg}">${stats.played}</td>
@@ -38,7 +50,7 @@ const participantList: string[] = participants.map((participant: Participant, in
             <td class="border p-4 text-right ${bg}">${stats.lost}</td>
             <td class="border p-4 text-right ${bg}">${participant.kills}</td>
             <td class="border p-4 text-right ${bg}">${participant.deaths}</td>
-            <td class="border p-4 text-right ${bg}">${kd.toFixed(2)}</td>
+            <td class="border p-4 text-right ${bg}">${kd.toFixed(2).replace(/[.,]00$/, '')}</td>
         </tr>
     `
 })

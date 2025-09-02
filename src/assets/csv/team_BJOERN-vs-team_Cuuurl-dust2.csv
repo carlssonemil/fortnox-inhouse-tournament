@@ -1,0 +1,11 @@
+matchid,mapnumber,steamid64,team,name,kills,deaths,damage,assists,enemy5ks,enemy4ks,enemy3ks,enemy2ks,utility_count,utility_damage,utility_successes,utility_enemies,flash_count,flash_successes,health_points_removed_total,health_points_dealt_total,shots_fired_total,shots_on_target_total,v1_count,v1_wins,v2_count,v2_wins,entry_count,entry_wins,equipment_value,money_saved,kill_reward,live_time,head_shot_kills,cash_earned,enemies_flashed
+4,0,76561198126695240,team_Rasande_Roland,skarre_,28,11,2934,8,0,1,4,4,7,59,2,2,14,5,1198,2934,275,82,0,0,0,0,4,3,73350,0,10200,364,13,61850,7
+4,0,76561197988215620,team_Rasande_Roland,Rasande Roland,14,10,1535,6,0,0,0,4,10,257,7,8,5,2,1206,1535,232,43,0,0,0,0,5,5,72950,0,4700,507,9,56650,2
+4,0,76561197998893054,team_Rasande_Roland,BJOERN,14,7,1223,4,0,0,0,3,9,95,3,4,10,7,809,1223,175,25,0,0,0,0,3,2,84750,0,2800,204,5,54450,11
+4,0,76561197973642923,team_Rasande_Roland,Phase,9,8,891,2,0,0,0,2,6,21,2,2,4,2,909,891,116,21,1,0,0,0,2,0,72850,0,2700,386,6,57550,3
+4,0,76561198070028224,team_Rasande_Roland,Mousn,9,9,1170,5,0,0,0,2,9,153,4,5,11,8,873,1170,174,36,0,0,1,0,3,2,64600,0,2700,400,3,52650,12
+4,0,76561198090211954,team__BIGGIE_CHEESE_,Cuuurl o} ♿,14,15,1253,2,0,1,0,2,3,32,1,1,13,7,1586,1253,107,26,0,0,3,1,2,1,58850,0,4200,668,9,53200,10
+4,0,76561198041848691,team__BIGGIE_CHEESE_,Atlas,13,14,1389,3,0,0,1,2,2,43,2,3,12,5,1576,1389,258,44,0,0,1,0,4,1,61050,0,3900,492,6,52500,8
+4,0,76561199163643591,team__BIGGIE_CHEESE_,✯ BIGGIE CHEESE 🥇,10,15,1270,6,0,0,1,2,3,57,1,1,0,0,1500,1270,172,40,0,0,1,0,6,2,56750,0,3600,575,6,52400,0
+4,0,76561198028181961,team__BIGGIE_CHEESE_,shzss,6,15,933,4,0,0,0,0,4,0,0,0,1,1,1591,933,157,31,0,0,0,0,4,1,54800,0,1800,439,5,54800,3
+4,0,76561199641521496,team__BIGGIE_CHEESE_,Warken,1,15,150,1,0,0,0,0,0,0,0,0,0,0,1500,150,82,9,0,0,3,0,1,0,46850,0,600,621,0,45700,0

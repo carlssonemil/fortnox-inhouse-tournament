@@ -1,5 +1,5 @@
 import participants from '../collections/participants'
-import type Participant from "../models/Participant.ts";
+import type Participant from '../models/Participant';
 
 const participantList: string[] = participants.map((participant: Participant, index: number) => {
     ++index;
