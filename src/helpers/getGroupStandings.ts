@@ -74,11 +74,38 @@ export function getGroupStandings(groupNumber: number, matches: Match[]) {
     });
 
     // Convert to array and sort
-    const sorted = Object.values(teams).sort((a: any, b: any) =>
-        b.points - a.points ||
-        (b.scored - b.conceded) - (a.scored - a.conceded) ||
-        b.scored - a.scored
-    );
+    const sorted = Object.values(teams).sort((a: any, b: any) => {
+        // Sort by points
+        if (b.points !== a.points) return b.points - a.points;
+
+        // Sort by round difference
+        const aDiff = a.scored - a.conceded;
+        const bDiff = b.scored - b.conceded;
+        if (bDiff !== aDiff) return bDiff - aDiff;
+
+        // Sort by head-to-head score
+        const directMatch = matches.find(
+            m => (m.team1 === a.id && m.team2 === b.id) || (m.team1 === b.id && m.team2 === a.id)
+        );
+
+        if (directMatch) {
+            let aScore = 0, bScore = 0;
+            directMatch.games.forEach(({ score1, score2 }) => {
+                if (score1 !== null && score2 !== null) {
+                    if (directMatch.team1 === a.id) {
+                        aScore += score1;
+                        bScore += score2;
+                    } else {
+                        aScore += score2;
+                        bScore += score1;
+                    }
+                }
+            });
+            if (aScore !== bScore) return bScore - aScore;
+        }
+
+        return 0;
+    });
 
     // Add ranking
     let sortedMap = sorted.map((team: any, index: number) => ({
@@ -87,13 +114,14 @@ export function getGroupStandings(groupNumber: number, matches: Match[]) {
     }));
 
     return sortedMap.map((team, index) => {
-        const { id, won, lost, points, scored, conceded } = team;
+        const { id, won, lost, points, scored, conceded, played } = team;
         const rank = index + 1;
         const rd = scored - conceded;
 
         return `
                 <tr>
                     <td class="border p-4 text-left font-bold">${rank}. ${teamName(id)}</td>
+                    <td class="border p-4 text-left hidden md:table-cell">${played}</td>
                     <td class="border p-4 text-left">${won}</td>
                     <td class="border p-4 text-left">${lost}</td>
                     <td class="border p-4 text-left">${rd > 0 ? '+' + rd : rd}</td>

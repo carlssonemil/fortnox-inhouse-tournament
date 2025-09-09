@@ -5,5 +5,7 @@ export default interface Participant {
     captain: boolean;
     team: number;
     kills: number;
+    assists: number;
     deaths: number;
+    damage: number;
 }

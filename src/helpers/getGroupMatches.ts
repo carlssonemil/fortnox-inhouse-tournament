@@ -12,9 +12,28 @@ export function getGroupMatches(groupNumber: number, matches: Match[]) {
     if (groupGames.length === 0) return [];
 
     return groupGames.map((match: Match) => {
+        let matchIsPlayed = match?.games[0]?.score1 !== null && match?.games[0]?.score2 !== null;
+        let matchScore = { team1: 0, team2: 0 };
+
+        match?.games.forEach((game: Game) => {
+            if (game.score1 !== null && game.score2 !== null) {
+                if (game.score1 > game.score2) {
+                    matchScore.team1++;
+                } else if (game.score2 > game.score1) {
+                    matchScore.team2++;
+                }
+            }
+        });
+
         let markup = `
                 <div class="mb-12">
-                    <h2 class="md:ml-3 md:text-center font-bold md:text-2xl/7 sm:truncate sm:tracking-tight mb-6">${teamName(match.team1)} <span class="font-light">vs.</span> ${teamName(match.team2)}</h2>
+                    <h2 class="md:ml-3 text-center font-bold md:text-2xl sm:tracking-tight mb-6">
+                        ${matchIsPlayed ? `<div class="font-normal md:text-5xl inline-block relative mr-6 md:-bottom-2">${matchScore.team1 > 1 ? `<span class="font-bold">${matchScore.team1}</span>` : `<span class="font-light opacity-60">${matchScore.team1}</span>`}</div>` : ''}
+                        ${matchIsPlayed && matchScore.team2 > 1 ? `<span class="opacity-60">${teamName(match.team1)}</span>` : `${teamName(match.team1)}`} 
+                            <span class="font-light">vs.</span> 
+                        ${matchIsPlayed && matchScore.team1 > 1 ? `<span class="opacity-60">${teamName(match.team2)}</span>` : `${teamName(match.team2)}`} 
+                        ${matchIsPlayed ? `<div class="font-normal md:text-5xl inline-block relative ml-6 md:-bottom-2">${matchScore.team2 > 1 ? `<span class="font-bold">${matchScore.team2}</span>` : `<span class="font-light opacity-60">${matchScore.team2}</span>`}</div>` : ''}
+                    </h2>
                     <div class="rounded-lg p-4 pt-8 md:p-8 md:pt-10 text-xs md:text-base bg-white shadow">
                         <div class="md:flex">
         `;
@@ -73,10 +92,15 @@ export function getGroupMatches(groupNumber: number, matches: Match[]) {
                             
                             <div tabindex="0" class="flex min-h-full items-center justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
                                 <el-dialog-panel class="relative transform overflow-hidden rounded-lg p-8 bg-white text-left transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in md:ml-8 md:mr-8 sm:w-full md:w-5xl data-closed:sm:translate-y-0 data-closed:sm:scale-95">
-                                    <table class="w-full">
+                                    <h2 class="md:ml-3 text-center font-bold md:text-2xl sm:tracking-tight mb-6">
+                                        ${matchIsPlayed && game.score1 !== null && game.score2 !== null ? `<div class="font-normal md:text-5xl inline-block relative mr-6 md:-bottom-2">${game?.score1 > game?.score2 ? `<span class="font-bold">${game.score1}</span>` : `<span class="font-light opacity-60">${game.score1}</span>`}</div>` : ''}
+                                        ${game.map}
+                                        ${matchIsPlayed && game.score1 !== null && game.score2 !== null ? `<div class="font-normal md:text-5xl inline-block relative ml-6 md:-bottom-2">${game?.score2 > game?.score1 ? `<span class="font-bold">${game.score2}</span>` : `<span class="font-light opacity-60">${game.score2}</span>`}</div>` : ''}
+                                    </h2>
+                                    <table class="w-full tabl-auto">
                                         <thead>
                                             <tr>
-                                                <th class="p-4 text-left">${teamName(match.team1)}</th>
+                                                <th class="p-4 text-left max-w-64">${teamName(match.team1)}</th>
                                                 <th class="p-4 text-left">K</th>
                                                 <th class="p-4 text-left">A</th>
                                                 <th class="p-4 text-left">D</th>
@@ -90,7 +114,7 @@ export function getGroupMatches(groupNumber: number, matches: Match[]) {
                                         <tbody>
                                             ${team1.map((member) => {
                                                 return `<tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-200">
-                                                    <td class="border p-4 text-left">${getFullname(member.name)}</td>
+                                                    <td class="border p-4 text-left max-w-64">${getFullname(member.name)}</td>
                                                     <td class="border p-4 text-left">${member.kills}</td>
                                                     <td class="border p-4 text-left">${member.assists}</td>
                                                     <td class="border p-4 text-left">${member.deaths}</td>
@@ -104,10 +128,10 @@ export function getGroupMatches(groupNumber: number, matches: Match[]) {
                                         </tbody>
                                     </table>
                                     
-                                    <table class="w-full mt-8">
+                                    <table class="w-full mt-8 table-auto">
                                         <thead>
                                             <tr>
-                                                <th class="p-4 text-left">${teamName(match.team2)}</th>
+                                                <th class="p-4 text-left max-w-64">${teamName(match.team2)}</th>
                                                 <th class="p-4 text-left">K</th>
                                                 <th class="p-4 text-left">A</th>
                                                 <th class="p-4 text-left">D</th>
@@ -121,7 +145,7 @@ export function getGroupMatches(groupNumber: number, matches: Match[]) {
                                         <tbody>
                                             ${team2.map((member) => {
                                                 return `<tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-200">
-                                                    <td class="border p-4 text-left">${getFullname(member.name)}</td>
+                                                    <td class="border p-4 text-left max-w-64">${getFullname(member.name)}</td>
                                                     <td class="border p-4 text-left">${member.kills}</td>
                                                     <td class="border p-4 text-left">${member.assists}</td>
                                                     <td class="border p-4 text-left">${member.deaths}</td>
@@ -141,7 +165,6 @@ export function getGroupMatches(groupNumber: number, matches: Match[]) {
             }
 
             let gameIsPlayed = game.score1 !== null && game.score2 !== null;
-            let matchIsPlayed = match?.games[0]?.score1 !== null && match?.games[0]?.score2 !== null;
 
             markupInner += `
                 <table class="match-info w-full">

@@ -17,6 +17,7 @@ export default `
         <thead>
             <tr>
                 <th></th>
+                <th class="p-4 text-left hidden md:table-cell">M</th>
                 <th class="p-4 text-left">W</th>
                 <th class="p-4 text-left">L</th>
                 <th class="p-4 text-left">RD</th>

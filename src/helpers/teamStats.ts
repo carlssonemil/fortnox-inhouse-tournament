@@ -25,8 +25,6 @@ export function teamStats(team: number, matches: Match[]): TeamStats {
                 return;
             }
 
-            stats[team].mapPlayed++;
-
             if (team1 === team) {
                 stats[team].scored += score1;
                 stats[team].conceded += score2;
@@ -38,6 +36,8 @@ export function teamStats(team: number, matches: Match[]): TeamStats {
                     stats[team].mapLost++;
                     winner--;
                 }
+
+                stats[team].mapPlayed++;
             } else if (team2 === team) {
                 stats[team].scored += score2;
                 stats[team].conceded += score1;
@@ -49,6 +49,8 @@ export function teamStats(team: number, matches: Match[]): TeamStats {
                     stats[team].mapLost++;
                     winner--;
                 }
+
+                stats[team].mapPlayed++;
             }
         });
 
