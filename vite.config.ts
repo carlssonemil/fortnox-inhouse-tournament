@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-    base: './',
+    base: '/fortnox-inhouse-tournament/',
     plugins: [
         tailwindcss(),
     ],
@@ -12,5 +12,5 @@ export default defineConfig({
                 main: './index.html'
             }
         }
-    },
+    }
 })
