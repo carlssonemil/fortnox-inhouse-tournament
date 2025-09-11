@@ -45,10 +45,28 @@ const setRouteHtml = () => {
     if (!root)
         return
 
-    const route: Routes | undefined = routes.find(route => route.path == window.location.pathname || '/fortnox-inhouse-tournament' + route.path == window.location.pathname)
+    // Get the current path, removing any base path if present
+    let currentPath = window.location.pathname
+    
+    // Handle GitHub Pages deployment path
+    if (currentPath.startsWith('/fortnox-inhouse-tournament')) {
+        currentPath = currentPath.replace('/fortnox-inhouse-tournament', '') || '/'
+    }
 
-    if (!route)
+    const route: Routes | undefined = routes.find(route => route.path === currentPath)
+
+    if (!route) {
+        // If no route matches, redirect to home
+        const homeRoute = routes.find(route => route.path === '/')
+        if (homeRoute) {
+            root.style.opacity = "0.0"
+            setTimeout(() => {
+                root.innerHTML = homeRoute.data
+                root.style.opacity = "1.0"
+            }, 50)
+        }
         return
+    }
 
     const html: string = route.data
     root.style.opacity = "0.0"
@@ -61,7 +79,21 @@ const setRouteHtml = () => {
 
 const setNavLinkColor = () => {
     document.querySelectorAll<HTMLAnchorElement>('nav a').forEach(link => {
-        if (link.href === window.location.href) {
+        // Extract the path from the link href
+        const linkUrl = new URL(link.href)
+        let linkPath = linkUrl.pathname
+        
+        // Handle GitHub Pages deployment path
+        if (linkPath.startsWith('/fortnox-inhouse-tournament')) {
+            linkPath = linkPath.replace('/fortnox-inhouse-tournament', '') || '/'
+        }
+        
+        let currentPath = window.location.pathname
+        if (currentPath.startsWith('/fortnox-inhouse-tournament')) {
+            currentPath = currentPath.replace('/fortnox-inhouse-tournament', '') || '/'
+        }
+        
+        if (linkPath === currentPath) {
             link.classList.add('bg-emerald-950')
             link.classList.remove('bg-transparent')
         } else {
@@ -88,15 +120,54 @@ const router = (mouseEvent: MouseEvent) => {
 }
 
 const setEventListeners = () => {
-    window.addEventListener('popstate', setRouteHtml)
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', () => {
+        setRouteHtml()
+        setNavLinkColor()
+    })
 
-    window.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll<HTMLAnchorElement>('nav a').forEach(link => {
+    // Handle initial page load and DOM updates
+    const initializeRouter = () => {
+        // Set up click handlers for navigation links
+        const navLinks = document.querySelectorAll<HTMLAnchorElement>('nav a')
+        navLinks.forEach(link => {
+            link.removeEventListener('click', router) // Remove any existing listeners
             link.addEventListener('click', router)
         })
 
+        // Handle the current route
         setRouteHtml()
         setNavLinkColor()
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeRouter)
+    } else {
+        // DOM is already ready, but we might need to wait for the nav to be rendered
+        setTimeout(initializeRouter, 0)
+    }
+
+    // Also set up a mutation observer to catch when nav is added dynamically
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        const element = node as Element
+                        if (element.querySelector && element.querySelector('nav')) {
+                            initializeRouter()
+                        }
+                    }
+                })
+            }
+        })
+    })
+
+    // Start observing
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
     })
 }
 
