@@ -1,4 +1,4 @@
-import type Match from "../models/Match.ts";
+import type Match from '../models/Match';
 import type TeamStats from '../models/TeamStats';
 
 export function teamStats(team: number, matches: Match[]): TeamStats {

@@ -39,8 +39,6 @@ a {
   button {
     font-size: 14px;
     line-height: 14px;
-    font-weight: normal;
-    text-transform: none;
 
     &:hover {
       color: lightgray;
@@ -66,4 +64,34 @@ a {
     padding: .5em 1em;
     background-color: var(--body-color);
   }
+}
+
+.winner {
+    position: relative;
+
+    svg {
+        position: absolute;
+        right: 0;
+        top: -.8em;
+        opacity: .8;
+    }
+}
+
+.playoffs {
+    a,
+    button {
+        display:inline-block;
+        text-align: right;
+        font-size: 14px;
+        line-height: 14px;
+        margin-top: 2px;
+    }
+
+    svg {
+        display: inline-block;
+        width: 22px;
+        margin-left: 2px;
+        top: -3px;
+        position: relative;
+    }
 }

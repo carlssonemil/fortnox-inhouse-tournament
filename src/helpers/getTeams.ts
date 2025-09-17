@@ -3,7 +3,6 @@ import type Team from '../models/Team';
 
 export function getTeams(): string {
     return teams.map((team: Team) => {
-
         return `
             <div class="md:grid md:grid-flow-row md:mr-2 mb-4 md:mb-0">
                 <table class="w-full border-collapse border">

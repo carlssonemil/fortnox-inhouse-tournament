@@ -11,6 +11,10 @@ import team_Krak3N_vs_team_Units_overpass from '../assets/json/team_Krak3N-vs-te
 import team_Cuuurl_vs_team_Krak3N_mirage from '../assets/json/team_Cuuurl-vs-team_Krak3N-mirage.json';
 import team_Cuuurl_vs_team_Krak3N_nuke from '../assets/json/team_Cuuurl-vs-team_Krak3N-nuke.json';
 import team_Cuuurl_vs_team_Krak3N_ancient from '../assets/json/team_Cuuurl-vs-team_Krak3N-ancient.json';
+import team_BJOERN_vs_team_Krak3N_mirage from '../assets/json/team_BJOERN-vs-team_Krak3N-mirage.json';
+import team_BJOERN_vs_team_Krak3N_overpass from '../assets/json/team_BJOERN-vs-team_Krak3N-overpass.json';
+import team_Units_vs_team_Cuuurl_mirage from '../assets/json/team_Units-vs-team_Cuuurl-mirage.json';
+import team_Units_vs_team_Cuuurl_ancient from '../assets/json/team_Units-vs-team_Cuuurl-ancient.json';
 
 const gameStats: GameStats[] = [];
 
@@ -24,6 +28,10 @@ gameStats.push(team_Krak3N_vs_team_Units_overpass as unknown as GameStats);
 gameStats.push(team_Cuuurl_vs_team_Krak3N_mirage as unknown as GameStats);
 gameStats.push(team_Cuuurl_vs_team_Krak3N_nuke as unknown as GameStats);
 gameStats.push(team_Cuuurl_vs_team_Krak3N_ancient as unknown as GameStats);
+gameStats.push(team_BJOERN_vs_team_Krak3N_mirage as unknown as GameStats);
+gameStats.push(team_BJOERN_vs_team_Krak3N_overpass as unknown as GameStats);
+gameStats.push(team_Units_vs_team_Cuuurl_mirage as unknown as GameStats);
+gameStats.push(team_Units_vs_team_Cuuurl_ancient as unknown as GameStats);
 
 export function extractGameStats(team1: number, team2: number, map: string): PlayerStats[]|null {
     const mapStats = gameStats.find(gs => (gs.map === map.toLowerCase() && gs.team1 === team1 && gs.team2 === team2));

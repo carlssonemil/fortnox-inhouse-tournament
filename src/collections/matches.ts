@@ -33,15 +33,15 @@ const matches: Match[] = [
     },
     {
         group: 1, team1: 1, team2: 3, games: [
-            { score1: null, score2: null, map: null, stats: null, url: null },
-            { score1: null, score2: null, map: null, stats: null, url: null },
+            { score1: 13, score2: 3, map: MAP.MIRAGE, stats: extractGameStats(1, 3, MAP.MIRAGE), url: null },
+            { score1: 13, score2: 4, map: MAP.OVERPASS, stats: extractGameStats(3, 1, MAP.OVERPASS), url: null },
             { score1: null, score2: null, map: null, stats: null, url: null }
         ]
     },
     {
         group: 1, team1: 4, team2: 2, games: [
-            { score1: null, score2: null, map: null, stats: null, url: null },
-            { score1: null, score2: null, map: null, stats: null, url: null },
+            { score1: 13, score2: 0, map: MAP.MIRAGE, stats: extractGameStats(2, 4, MAP.MIRAGE), url: null },
+            { score1: 13, score2: 3, map: MAP.ANCIENT, stats: extractGameStats(4, 2, MAP.ANCIENT), url: null },
             { score1: null, score2: null, map: null, stats: null, url: null }
         ]
     },
